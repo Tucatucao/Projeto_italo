@@ -1,0 +1,104 @@
+<!-- Data.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Filtrar por Dados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/data.css') }}">
+    <script defer src="{{ url_for('static', filename='script/data.js') }}"></script>
+</head>
+<body>
+    <h1>Filtrar Casos por Filtros Combinados</h1>
+
+    <form method="post">
+        <label><input type="radio" name="tipo_filtro" value="padrao" checked> Filtro por Mês e Ano</label><br>
+        <label><input type="radio" name="tipo_filtro" value="intervalo"> Filtro por Intervalo de Datas</label><br><br>
+
+        <div id="filtro-padrao">
+            <label>Mês:</label>
+            <select name="mes">
+                {% for numero, nome in meses %}
+                    <option value="{{ numero }}">{{ nome }}</option>
+                {% endfor %}
+            </select>
+            <label>Ano:</label>
+            <select name="ano">
+                {% for numero, nome in anos %}
+                    <option value="{{ numero }}">{{ nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div id="filtro-intervalo" style="display:none;">
+            <label>Data Início:</label>
+            <input type="date" name="data_inicio">
+            <label>Data Fim:</label>
+            <input type="date" name="data_fim">
+        </div>
+
+        <br>
+        <div class="filtros-dados">
+    <div>
+        <label>Sexo:</label>
+        <select name="sexo">
+            {% for sexo in sexos %}
+                <option value="{{ sexo }}">{{ sexo }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label>Região:</label>
+        <select name="regiao">
+            {% for regiao in regioes %}
+                <option value="{{ regiao }}">{{ regiao }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label>Município:</label>
+        <select name="municipio">
+            {% for municipio in municipios %}
+                <option value="{{ municipio }}">{{ municipio }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label>Natureza:</label>
+        <select name="natureza">
+            {% for natureza in naturezas %}
+                <option value="{{ natureza }}">{{ natureza }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label>Idade:</label>
+        <select name="idade">
+            {% for idade in idades %}
+                <option value="{{ idade }}">{{ idade }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+        <br><br>
+        <button type="submit">Filtrar</button>
+        <br>
+    </form>
+
+    <div class="resultado-data">
+        {% if resultado %}
+            <h2>{{ resultado }}</h2>
+        {% endif %}
+    </div>
+
+    <br><br>
+   <div class="back-button">
+    <a href="/" class="btn-voltar">Voltar</a>
+</div>
+
+</body>
+</html>

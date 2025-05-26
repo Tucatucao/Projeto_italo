@@ -1,0 +1,36 @@
+<!-- Grafico.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gráfico - {{ categoria }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index_graficos.css') }}">
+    <script defer src="{{ url_for('static', filename='script/grafico.js') }}"></script>
+    
+</head>
+<body>
+    <h2>Gráfico</h2>
+    <div class ="grafico-container">
+        <img id="grafico-img" src="{{ url_for('static', filename=nome_arquivo + '.png') }}?t={{ timestamp }}" alt="Gráfico">
+
+        <h3>Resumo dos Dados</h3>
+        <br>
+        <table>
+            <tr>
+                <th>{{ categoria }}</th>
+                <th>Casos</th>
+            </tr>
+            {% for valor, total in dados %}
+                <tr>
+                    <td>{{ valor }}</td>
+                    <td>{{ total }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <a href="/"><button>Voltar</button></a>
+    </div>
+
+    <script src="{{ url_for('static', filename='grafico.js') }}"></script>
+</body>
+</html>

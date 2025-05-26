@@ -1,0 +1,118 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #4683b4af, #4364f7);
+    color: #e6e6e6;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+}
+
+h1 {
+    
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+form {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 15px;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+label {
+    margin: 10px 0 5px 0;
+    font-weight: bold;
+    color: #e6e6e6;
+}
+
+select, input[type="date"] {
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    width: 200px;
+}
+
+button, .btn-voltar {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background: #1E90FF;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none; /* Remove sublinhado */
+    display: inline-block;
+}
+
+button:hover, .btn-voltar:hover {
+    background: #0b75d1;
+    transform: scale(1.05);
+}
+
+
+.resultado-data {
+    border-radius: 15px;
+    padding: 20px 30px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    max-width: 800px;
+    margin: 20px auto;
+    text-align: center;
+}
+.resultado-data:not(:empty) {
+ background-color: rgba(255, 255, 255, 0.05);
+}
+
+.back-button, a {
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.filtros-dados {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 40px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+.filtros-dados label {
+    font-weight: bold;
+    color: #e6e6e6;
+}
+
+.filtros-dados select {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.filtros-dados + button {
+    grid-column: 1 / -1; /* Faz o botão ocupar as duas colunas */
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+

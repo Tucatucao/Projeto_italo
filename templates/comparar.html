@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<body lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Comparador</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/comparar.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>Comparador</h1>
+
+    {% if erro %}
+        <p style="color: red;">{{ erro }}</p>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('comparar') }}">
+        <div>
+            <label><input type="radio" name="tipo" value="municipio" {% if tipo == 'municipio' %}checked{% endif %}> Município</label>
+            <label><input type="radio" name="tipo" value="regiao" {% if tipo == 'regiao' %}checked{% endif %}> Região</label>
+        </div>
+        <div class="form-group">
+            <label for="local1">Escolha o primeiro {{ tipo }}:</label>
+            <select name="local1" id="local1" required>
+                <option value="">Primeiro Valor...</option>
+                {% for opcao in opcoes %}
+                    <option value="{{ opcao }}">{{ opcao }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="local2">Escolha o segundo {{ tipo }}:</label>
+            <select name="local2" id="local2" required>
+                <option value="">Segundo Valor...</option>
+                {% for opcao in opcoes %}
+                    <option value="{{ opcao }}">{{ opcao }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit">Comparar</button>
+    </form>
+
+    {% if resultado %}
+        <div class="comparacao-container">
+            <div class="resultado01">
+                <h2>Resultado da Comparação</h2>
+                <p><strong>{{ resultado.local1 }}:</strong> {{ resultado.total1 }} casos</p>
+                <p><strong>Distribuição por sexo:</strong></p>
+                <ul>
+                    <li>Feminino: {{ resultado.resumo1.get('FEMININO', 0) }}</li>
+                    <li>Masculino: {{ resultado.resumo1.get('MASCULINO', 0) }}</li>
+                    <li>Não informado: {{ resultado.resumo1.get('NAO INFORMADO', 0) }}</li>
+                    <li>Desconhecido: {{ resultado.resumo1.get('DESCONHECIDO', 0) }}</li>
+                </ul>
+            </div>
+
+            <div class="resultado02">
+                <h2>Resultado da Comparação</h2>
+                <p><strong>{{ resultado.local2 }}:</strong> {{ resultado.total2 }} casos</p>
+                <p><strong>Distribuição por sexo:</strong></p>
+                <ul>
+                    <li>Feminino: {{ resultado.resumo2.get('FEMININO', 0) }}</li>
+                    <li>Masculino: {{ resultado.resumo2.get('MASCULINO', 0) }}</li>
+                    <li>Não informado: {{ resultado.resumo2.get('NAO INFORMADO', 0) }}</li>
+                    <li>Desconhecido: {{ resultado.resumo2.get('DESCONHECIDO', 0) }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="resultado_Final">
+            <h2>Comparação</h2>
+            <p>{{ resultado.comparacao }}</p>
+        </div>
+        <br>
+        <div class = "limpar">
+            <form action="/comparar" method="get">
+                <button type="submit">Limpar Dados</button>
+            </form>
+        </div>
+        
+
+    {% endif %}
+
+    <br>
+    <div class="back-button">
+        <button onclick="window.location.href='/'">Voltar</button>
+    </div>
+</div>
+</body>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tipoRadios = document.querySelectorAll('input[name="tipo"]');
+        const local1Select = document.querySelector('select[name="local1"]');
+        const local2Select = document.querySelector('select[name="local2"]');
+
+        tipoRadios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                const tipo = this.value;
+                fetch(`/opcoes?tipo=${tipo}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.erro) {
+                            alert('Erro: ' + data.erro);
+                            return;
+                        }
+                        local1Select.innerHTML = '<option value="">-- Escolha o primeiro --</option>';
+                        local2Select.innerHTML = '<option value="">-- Escolha o segundo --</option>';
+                        data.opcoes.forEach(opcao => {
+                            local1Select.innerHTML += `<option value="${opcao}">${opcao}</option>`;
+                            local2Select.innerHTML += `<option value="${opcao}">${opcao}</option>`;
+                        });
+                    })
+                    .catch(error => {
+                        alert('Erro ao carregar opções: ' + error);
+                    });
+            });
+        });
+    });
+    </script>
+</body>
+</html>
